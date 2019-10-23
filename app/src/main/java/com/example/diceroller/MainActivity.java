@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -57,11 +60,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void on_button_click(View view) {
-        TextView tv = this.findViewById(R.id.numberTextView);
 
+        // intialising widgets
+        TextView tv = this.findViewById(R.id.titleTextView);
+        TextInputEditText editTxt = this.findViewById(R.id.textInputEditText);
+        Button button = this.findViewById(R.id.button);
+
+        // converting user input into integer
+        String userString = editTxt.getText().toString();
+        int userInput = new Integer(userString).intValue();
+
+        // intiialising random generator
         Random r = new Random();
-        int number = r.nextInt( 10);
+        int number = r.nextInt( 6) + 1;
 
-        tv.setText(Integer.toString(number));
+        // generating random number
+        button.setText(Integer.toString(number));
+
+        try {
+            if (userInput == number) {
+                tv.setText("Congratulations!");
+            }
+            else {
+                tv.setText("Unlucky :( Try again!");
+            }
+        }
+        catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 }
