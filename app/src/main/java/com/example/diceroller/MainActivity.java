@@ -65,10 +65,15 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = this.findViewById(R.id.titleTextView);
         TextInputEditText editTxt = this.findViewById(R.id.textInputEditText);
         Button button = this.findViewById(R.id.button);
+        TextView tvPoints = this.findViewById(R.id.points);
 
         // converting user input into integer
         String userString = editTxt.getText().toString();
         int userInput = new Integer(userString).intValue();
+
+        //converting points box into integer
+        String txtPoints = tvPoints.getText().toString();
+        int points = Integer.parseInt(txtPoints);
 
         // intiialising random generator
         Random r = new Random();
@@ -77,16 +82,13 @@ public class MainActivity extends AppCompatActivity {
         // generating random number
         button.setText(Integer.toString(number));
 
-        try {
-            if (userInput == number) {
-                tv.setText("Congratulations!");
-            }
-            else {
-                tv.setText("Unlucky :( Try again!");
-            }
+        if (userInput == number) {
+            tv.setText("Congratulations!");
+            points = points + 1;
+            tvPoints.setText(Integer.toString(points));
         }
-        catch (NumberFormatException e) {
-            e.printStackTrace();
+        else {
+            tv.setText("Try again!");
         }
     }
 }
