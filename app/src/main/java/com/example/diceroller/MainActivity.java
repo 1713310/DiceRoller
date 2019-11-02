@@ -1,10 +1,7 @@
 package com.example.diceroller;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,26 +10,36 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Button diceBtn;
+    private Button questionBtn;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.content_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        diceBtn = findViewById(R.id.diceRollBtn);
+        questionBtn = findViewById(R.id.btnIceBreakers);
+
+        diceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Intent intentDice = new Intent(MainActivity.this, RollDice.class);
+                startActivity(intentDice);
+            }
+        });
+
+        questionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentQuestion = new Intent(MainActivity.this,IceBreakers.class);
+                startActivity(intentQuestion);
             }
         });
     }
@@ -59,36 +66,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void on_button_click(View view) {
-
-        // intialising widgets
-        TextView tv = this.findViewById(R.id.titleTextView);
-        TextInputEditText editTxt = this.findViewById(R.id.textInputEditText);
-        Button button = this.findViewById(R.id.button);
-        TextView tvPoints = this.findViewById(R.id.points);
-
-        // converting user input into integer
-        String userString = editTxt.getText().toString();
-        int userInput = new Integer(userString).intValue();
-
-        //converting points box into integer
-        String txtPoints = tvPoints.getText().toString();
-        int points = Integer.parseInt(txtPoints);
-
-        // intiialising random generator
-        Random r = new Random();
-        int number = r.nextInt( 6) + 1;
-
-        // generating random number
-        button.setText(Integer.toString(number));
-
-        if (userInput == number) {
-            tv.setText("Congratulations!");
-            points = points + 1;
-            tvPoints.setText(Integer.toString(points));
-        }
-        else {
-            tv.setText("Try again!");
-        }
-    }
 }
